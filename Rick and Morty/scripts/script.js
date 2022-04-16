@@ -1,8 +1,10 @@
 let mainAreaE;
+let characterCardE;
 function renderCharacter(name, status, species, image) {
     // mainAreaE = document.querySelector("#main-area");
     const cardCharacterE = document.createElement("div");
-    mainAreaE.appendChild(cardCharacterE);
+    cardCharacterE.classList.add("character-card");
+    characterCardE.appendChild(cardCharacterE);
 
     //image
     const characterImageE = document.createElement("img");
@@ -20,7 +22,7 @@ function renderCharacter(name, status, species, image) {
     cardCharacterE.appendChild(nameE);
     cardCharacterE.appendChild(specieAndEstatusE);
 
-    console.log("name", name);
+    
 }
 
 async function fetchCharacter(charactersUrls) {
@@ -29,7 +31,6 @@ async function fetchCharacter(charactersUrls) {
     const resolvedFetchPromises = await Promise.all(unresolvedFetchPromises);
     const jsonPromises = resolvedFetchPromises.map(resolvedPromise => resolvedPromise.json());
     const resolvedPromises = await Promise.all(jsonPromises);
-    console.log("resolvedPromises",resolvedPromises);
     resolvedPromises.forEach(character => {
         renderCharacter(character.name, character.status, character.species, character.image);
     });
@@ -38,9 +39,9 @@ async function fetchCharacter(charactersUrls) {
 }
 
 function updateMainArea(name, date,episodeCode, characters) {
-    console.log("update main area"); 
     //const mainE = document.querySelector("#main-area");
     mainAreaE.innerHTML = "";
+    characterCardE.innerHTML = "";
 
     const titleE = document.createElement("h2");
     titleE.innerText = name;
@@ -50,7 +51,8 @@ function updateMainArea(name, date,episodeCode, characters) {
 
     mainAreaE.appendChild(titleE);
     mainAreaE.appendChild(dateAndCodeE);
-
+    mainAreaE.appendChild(characterCardE);
+    
     fetchCharacter(characters);
 
 }
@@ -62,21 +64,29 @@ function sidebar() {
     fetch("https://rickandmortyapi.com/api/episode").then(result => {
         return result.json()
     }).then(json =>{
-        console.log(json.results);
-
+        
         json.results.forEach(episode => {
-            console.log(`Episode ${episode}`);
             const titleE = document.createElement("p");
             titleE.innerText = `Episode ${episode.id}`;
             sidebarE.appendChild(titleE);
             titleE.addEventListener("click", _event => {
-                console.log("episode", episode.name);
                 updateMainArea(episode.name,episode.date,episode.episode,episode.characters);
             });
             
         });
+        const nextButton = document.createElement("button");
+        nextButton.innerText = "New Episodes";
+        nextButton.addEventListener("click", _event => {
+            
+        })
+        sidebarE.appendChild(nextButton);
 
-    })
+        const firstEpisode = json.results[0];
+        
+        updateMainArea(firstEpisode.name,firstEpisode.date,firstEpisode.episode,firstEpisode.characters);
+            
+    });
+
     
 }
 
@@ -85,6 +95,9 @@ function mainArea() {
     mainAreaE.id = "main-area";
     document.querySelector("#root").appendChild(mainAreaE);
     mainAreaE.innerText = "this is my main area";
+
+    characterCardE = document.createElement("div");
+    //updateMainArea();
     
 }
 
