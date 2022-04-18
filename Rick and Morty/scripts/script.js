@@ -1,5 +1,8 @@
 let mainAreaE;
 let characterCardE;
+let sidebarEpisodesE;
+let sidebarButtonE;
+
 function renderCharacter(name, status, species, image) {
     // mainAreaE = document.querySelector("#main-area");
     const cardCharacterE = document.createElement("div");
@@ -57,35 +60,49 @@ function updateMainArea(name, date,episodeCode, characters) {
 
 }
 
-//query all the episodes information
-function sidebar() {
-    const sidebarE = document.createElement("div");
-    document.querySelector("#root").appendChild(sidebarE);
-    fetch("https://rickandmortyapi.com/api/episode").then(result => {
+function updateSidebar(url) {
+    fetch(url).then(result => {
         return result.json()
     }).then(json =>{
-        
         json.results.forEach(episode => {
             const titleE = document.createElement("p");
             titleE.innerText = `Episode ${episode.id}`;
-            sidebarE.appendChild(titleE);
+            sidebarEpisodesE.appendChild(titleE);
             titleE.addEventListener("click", _event => {
                 updateMainArea(episode.name,episode.date,episode.episode,episode.characters);
             });
             
         });
-        const nextButton = document.createElement("button");
-        nextButton.innerText = "New Episodes";
-        nextButton.addEventListener("click", _event => {
+        if (json.info.next != "") {
             
-        })
-        sidebarE.appendChild(nextButton);
-
+            nextButton.addEventListener("click", _event => {
+                
+            })
+        }
+        
         const firstEpisode = json.results[0];
+        console.log("json",json.results[0]);
         
         updateMainArea(firstEpisode.name,firstEpisode.date,firstEpisode.episode,firstEpisode.characters);
             
     });
+}
+
+//query all the episodes information
+function sidebar() {
+    const sidebarE = document.createElement("div");
+    sidebarE.id="sidebar";
+    sidebarEpisodesE = document.createElement("div");
+    sidebarEpisodesE.id="sidebar-episodes";
+    sidebarButtonE = document.createElement("div");
+    sidebarButtonE.id="sidebar-button";
+    document.querySelector("#root").appendChild(sidebarE);
+    sidebarE.appendChild(sidebarEpisodesE);
+    sidebarE.appendChild(sidebarButtonE);
+    const nextButton = document.createElement("button");
+    nextButton.innerText = "New Episodes";
+    sidebarButtonE.appendChild(nextButton);
+    updateSidebar("https://rickandmortyapi.com/api/episode");
 
     
 }
