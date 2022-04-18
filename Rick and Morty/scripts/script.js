@@ -6,7 +6,6 @@ let nextButton;
 let nextUrl = "first";
 
 function updateCharacterMainArea(characterUrl) {
-    //const mainE = document.querySelector("#main-area");
     mainAreaE.innerHTML = "";
     characterCardE.innerHTML = "";
     
@@ -27,7 +26,7 @@ function updateCharacterMainArea(characterUrl) {
     }).then (character => {
         console.log("character",character);
         titleE.innerText = character.name;
-        descriptionE.innerText = `${character.species} | ${character.status} | ${character.origin,name}`;
+        descriptionE.innerText = `${character.species} | ${character.status} | ${character.origin.name}`;
         characterImageE.src = character.image;
 
     })
