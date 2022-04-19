@@ -14,7 +14,7 @@ body{
 
 #sidebar{
     padding: 1em;
-    width: 40em;
+    
 }
 
 #main-area{
@@ -58,10 +58,29 @@ body{
   flex-wrap: wrap;
   flex-direction: row;
   width: 95%;
-  height: 90%;
+  
   align-content: space-between;
 }
 
 #body-content{
     background-color: #f3f1f1;
 }
+
+button{
+    background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+  }
