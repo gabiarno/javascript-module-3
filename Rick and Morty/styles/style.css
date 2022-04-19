@@ -2,16 +2,29 @@ body{
    font-family: sans-serif; 
 }
 
+#body-content{
+    display: flex;
+    flex-direction: row;
+}
+
 #root{
     display: flex;
+    flex-direction: column;
 }
 
 #sidebar{
     padding: 1em;
+    width: 40em;
 }
 
 #main-area{
     margin: 1em;
+}
+
+#header{
+    text-align: center;
+    color: #2196f3;
+    font-size: larger;
 }
 
 .character-card{
@@ -25,4 +38,13 @@ body{
 
 .character-card div{
     margin: 0.5em;
+}
+
+#characters{
+    display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 95%;
+  height: 90%;
+  align-content: space-between;
 }

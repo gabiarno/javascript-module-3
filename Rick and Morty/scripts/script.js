@@ -79,6 +79,7 @@ function updateMainArea(name, date,episodeCode, characters) {
     //const mainE = document.querySelector("#main-area");
     mainAreaE.innerHTML = "";
     characterCardE.innerHTML = "";
+    characterCardE.id = "characters"
 
     const titleE = document.createElement("h2");
     titleE.innerText = name;
@@ -131,7 +132,7 @@ function updateSidebar(url) {
     sidebarButtonE = document.createElement("div");
     sidebarButtonE.id="sidebar-button";
 
-    document.querySelector("#root").appendChild(sidebarE);
+    document.querySelector("#body-content").appendChild(sidebarE);
     sidebarE.appendChild(sidebarEpisodesE);
     sidebarE.appendChild(sidebarButtonE);
 
@@ -151,7 +152,7 @@ function updateSidebar(url) {
 function mainArea() {
     mainAreaE = document.createElement("div");
     mainAreaE.id = "main-area";
-    document.querySelector("#root").appendChild(mainAreaE);
+    document.querySelector("#body-content").appendChild(mainAreaE);
     mainAreaE.innerText = "this is my main area";
 
     characterCardE = document.createElement("div");
@@ -159,5 +160,18 @@ function mainArea() {
     
 }
 
+function header() {
+    headerE = document.createElement("div");
+    headerE.id = "header";
+    document.querySelector("#root").appendChild(headerE);
+
+    bodyE = document.createElement("div");
+    bodyE.id = "body-content";
+    document.querySelector("#root").appendChild(bodyE);
+    headerE.innerText = "Ricky and Morty Project";
+
+}
+
+header();
 sidebar();
 mainArea();
