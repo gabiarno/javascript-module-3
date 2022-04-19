@@ -14,6 +14,9 @@ function updateCharacterMainArea(characterUrl) {
     const titleE = document.createElement("h2");
     
     const descriptionE = document.createElement("h3");
+
+    const locationE = document.createElement("button");
+    
     
     mainAreaE.appendChild(characterImageE);
     mainAreaE.appendChild(titleE);
@@ -24,14 +27,60 @@ function updateCharacterMainArea(characterUrl) {
         return result.json()
         
     }).then (character => {
-        console.log("character",character);
         titleE.innerText = character.name;
-        descriptionE.innerText = `${character.species} | ${character.status} | ${character.origin.name}`;
+        locationE.innerText = character.origin.name;
+        locationE.addEventListener("click", event => {
+            event.preventDefault();
+            console.log("url",character.origin.url);
+            updateLocationMainArea(character.origin.url);
+        })
+        descriptionE.innerHTML = `${character.species} | ${character.status} | `;
+        descriptionE.appendChild(locationE);
         characterImageE.src = character.image;
-        fetchCharacterEpisodes(character.episode) 
+        fetchCharacterEpisodes(character.episode); 
         
 
     })
+}
+
+    function updateLocationMainArea(locationUrl) {
+        mainAreaE.innerHTML = "";
+        characterCardE.innerHTML = "";
+    
+        const titleE = document.createElement("h2");
+        const descriptionE = document.createElement("h3");
+    
+        mainAreaE.appendChild(titleE);
+        mainAreaE.appendChild(descriptionE);
+        mainAreaE.appendChild(characterCardE);
+        
+        fetch(locationUrl).then(result => {
+            return result.json()
+            
+        }).then (location => {
+            titleE.innerText = location.name;
+            console.log("location",location);
+            descriptionE.innerHTML = `${location.type} | ${location.dimension} `;
+            fetchLocationCharacters(location.residents);
+
+        })
+    }
+    
+    async function fetchLocationCharacters(charactersUrls) {
+        //map url to fetch promises
+        const unresolvedFetchPromises = charactersUrls.map(characterUrl => fetch(characterUrl));
+        const resolvedFetchPromises = await Promise.all(unresolvedFetchPromises);
+        const jsonPromises = resolvedFetchPromises.map(resolvedPromise => resolvedPromise.json());
+        const resolvedPromises = await Promise.all(jsonPromises);
+        resolvedPromises.forEach(character => {
+            console.log("character",character);
+            renderCharacter(character.name, character.status, character.species, character.image,character.url);
+    
+            //renderCharacterEpisodes(episode.name, episode.episode, episode.air_date, episode.characters);
+        });
+    
+    
+    }
 
     async function fetchCharacterEpisodes(episodesUrls) {
         //map url to fetch promises
@@ -46,7 +95,7 @@ function updateCharacterMainArea(characterUrl) {
     
     }
 
-}
+
 
 function renderCharacterEpisodes(name, code, airDate, characters) {
     // mainAreaE = document.querySelector("#main-area");
