@@ -28,10 +28,55 @@ function updateCharacterMainArea(characterUrl) {
         titleE.innerText = character.name;
         descriptionE.innerText = `${character.species} | ${character.status} | ${character.origin.name}`;
         characterImageE.src = character.image;
+        fetchCharacterEpisodes(character.episode) 
+        
 
     })
 
+    async function fetchCharacterEpisodes(episodesUrls) {
+        //map url to fetch promises
+        const unresolvedFetchPromises = episodesUrls.map(characterUrl => fetch(characterUrl));
+        const resolvedFetchPromises = await Promise.all(unresolvedFetchPromises);
+        const jsonPromises = resolvedFetchPromises.map(resolvedPromise => resolvedPromise.json());
+        const resolvedPromises = await Promise.all(jsonPromises);
+        resolvedPromises.forEach(episode => {
+            renderCharacterEpisodes(episode.name, episode.episode, episode.air_date, episode.characters);
+        });
+    
+    
+    }
+
 }
+
+function renderCharacterEpisodes(name, code, airDate, characters) {
+    // mainAreaE = document.querySelector("#main-area");
+    const cardCharacterE = document.createElement("div");
+    cardCharacterE.classList.add("character-card");
+    characterCardE.appendChild(cardCharacterE);
+
+    
+    //name
+    const nameE = document.createElement("p");
+    //nameE.style.fontWeight=bold;
+    nameE.innerText = name;
+    
+    //specie and status
+    const codeE = document.createElement("div");
+    codeE.innerText = code;
+    
+    cardCharacterE.appendChild(nameE);
+    cardCharacterE.appendChild(codeE);
+
+    cardCharacterE.addEventListener("click", _event => {
+        //console.log("episode", url);
+        updateMainArea(name,airDate,code,characters);
+            
+        //updateCharacterMainArea(url);
+    })
+
+    
+}
+
 function renderCharacter(name, status, species, image,url) {
     // mainAreaE = document.querySelector("#main-area");
     const cardCharacterE = document.createElement("div");
@@ -105,7 +150,8 @@ function updateSidebar(url) {
             titleE.innerText = `Episode ${episode.id}`;
             sidebarEpisodesE.appendChild(titleE);
             titleE.addEventListener("click", _event => {
-                updateMainArea(episode.name,episode.date,episode.episode,episode.characters);
+                console.log("episode",episode);
+                updateMainArea(episode.name,episode.air_date,episode.episode,episode.characters);
             });
             
         });
@@ -114,7 +160,7 @@ function updateSidebar(url) {
         }
         
         const firstEpisode = json.results[0];
-        updateMainArea(firstEpisode.name,firstEpisode.date,firstEpisode.episode,firstEpisode.characters);
+        updateMainArea(firstEpisode.name,firstEpisode.air_date,firstEpisode.episode,firstEpisode.characters);
         nextUrl = json.info.next;  
         if (!Boolean(nextUrl)) {
             nextButton.disabled = true  ;
