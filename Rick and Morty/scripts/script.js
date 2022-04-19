@@ -31,8 +31,11 @@ function updateCharacterMainArea(characterUrl) {
         locationE.innerText = character.origin.name;
         locationE.addEventListener("click", event => {
             event.preventDefault();
-            console.log("url",character.origin.url);
-            updateLocationMainArea(character.origin.url);
+            if (character.origin.name != "unknown") {
+                updateLocationMainArea(character.origin.url);
+                
+            }
+            
         })
         descriptionE.innerHTML = `${character.species} | ${character.status} | `;
         descriptionE.appendChild(locationE);
