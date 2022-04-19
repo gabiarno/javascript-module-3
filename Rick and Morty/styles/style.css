@@ -23,13 +23,19 @@ body{
 
 #header{
     text-align: center;
-    color: #2196f3;
-    font-size: larger;
+    color: #006f65;
+    font-size: xx-large;
+    background-image: linear-gradient(#4caf50, #f3f37b);
+    padding: 2em;
 }
 
 .character-card{
     margin: 0.5em;
     width: 184px;
+    background-color: white;
+    border-radius: 25px;
+  border: 2px solid #dae7e7;
+    
 }
 
 .character-card img{
@@ -38,6 +44,13 @@ body{
 
 .character-card div{
     margin: 0.5em;
+    margin-bottom: 1.5em;
+}
+
+.character-card p{
+    font-weight: bold;
+    color: darkslategrey;
+    font-size: larger;
 }
 
 #characters{
@@ -47,4 +60,8 @@ body{
   width: 95%;
   height: 90%;
   align-content: space-between;
+}
+
+#body-content{
+    background-color: #f3f1f1;
 }
