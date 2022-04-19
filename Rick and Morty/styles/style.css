@@ -84,3 +84,8 @@ button:hover {
     background-color: #4CAF50; /* Green */
     color: white;
   }
+
+  h2{
+      color: #006f65;
+      font-size: xx-large;
+  }
