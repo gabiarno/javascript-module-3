@@ -48,6 +48,11 @@ describe("06-exercises", () => {
     expect.assertions(1);
 
     // Finish the test
+    fetchUserOK(userID) // Promise<{}>
+    .then(data => {
+        expect(data).toEqual(expectedUser);
+        done();
+      });
   });
 
   /**
@@ -69,5 +74,11 @@ describe("06-exercises", () => {
     expect.assertions(1);
 
     // Finish the test
+    fetchUserFail(userID)
+    // .then(msg => console.log('UNUSED CONSOLE LOG')) // pointless and useless
+    .catch(rejectedMessage => {
+      expect(rejectedMessage).toEqual(expectedMessage);
+      done();
+    });
   });
 });
