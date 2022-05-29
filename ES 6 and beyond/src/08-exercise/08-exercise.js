@@ -11,7 +11,7 @@
 
 // Finish the code of the function
 function exercise08() {
-    function func(a, b) {
+     const func = (a, b) => {
         return a + b;
     }
 

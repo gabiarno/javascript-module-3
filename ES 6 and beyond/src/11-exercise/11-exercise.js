@@ -16,7 +16,9 @@
  */
 
 // Finish the code of the function
-function exercise11() {}
+function exercise11(array, entry) {
+    return array.find(entry);
+}
 
 // Don’t change the code bellow this line
 export default exercise11;
