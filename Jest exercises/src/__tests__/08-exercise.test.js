@@ -18,6 +18,7 @@ describe("08-exercises", () => {
     /**
      * 2. Execute the `increment` by passing the arguments: (4, 5, calculator)
      */
+    increment(4,5,calculator)
 
     // You should make 2 assertions in this test, see bellow
     expect.assertions(2);
